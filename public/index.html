@@ -6,12 +6,40 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>siga-scanner</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        padding: 20px;
+        margin: 0;
+      }
+      .v-input {
+        display: block;
+        width: 100%;
+        padding: 0 16px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        height: 40px;
+        font-size: 16px;
+      }
+      .v-field {
+        padding-bottom: 20px;
+      }
+      .v-field__label {
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but siga-scanner doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <input type="text" class="js-qrcode-info">
+    <div class="v-field">
+      <div class="v-field__label">Result:</div>
+      <input type="text" class="v-input js-qrcode-info">
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <template v-if="noStreamApiSupport">
       <label class="v-btn-photo">
         <QrcodeCapture @decode="onDecode"/>
@@ -17,6 +16,7 @@
         class="v-modal"
       >
         <QrcodeDropZone
+          v-if="!result"
           class="v-modal__container"
           @decode="onDecode"
         >
