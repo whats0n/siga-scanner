@@ -6,7 +6,7 @@
     >{{ error }}</div>
     <template v-if="noStreamApiSupport">
       <label class="v-btn-photo">
-        <QrcodeCapture @decode="onDecode"/>
+        <QrcodeCapture @detect="onDetect"/>
         <span class="v-btn">Scan</span>
       </label>
     </template>
@@ -66,6 +66,14 @@ export default {
     handleClick () {
       this.opened = true
       this.result = ''
+    },
+    async onDetect (promise) {
+      try {
+        const { content } = await promise
+        this.onDecode(content)
+      } catch (error) {
+        this.onDecode(null)
+      }
     },
     onDecode (result) {
       this.opened = false
