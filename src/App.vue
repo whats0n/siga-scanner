@@ -5,7 +5,14 @@
       <QrcodeCapture @decode="onDecode"/>
     </template>
     <template v-else>
-      <div class="v-modal">
+      <button
+        class="btn"
+        @click.prevent="handleClick"
+      >Scan</button>
+      <div
+        v-if="opened"
+        class="v-modal"
+      >
         <QrcodeDropZone
           class="v-modal__container"
           @decode="onDecode"
@@ -34,7 +41,8 @@ export default {
   },
   data: () => ({
     result: '',
-    noStreamApiSupport: false
+    noStreamApiSupport: false,
+    opened: false
   }),
   watch: {
     result (newValue) {
@@ -47,7 +55,11 @@ export default {
     }
   },
   methods: {
+    handleClick () {
+      this.opened = true
+    },
     onDecode (result) {
+      this.opened = false
       this.result = result
     },
     async onInit (promise) {
