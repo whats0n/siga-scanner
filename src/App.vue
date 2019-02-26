@@ -8,7 +8,6 @@
       <div class="v-modal">
         <QrcodeDropZone
           class="v-modal__container"
-          @init="logErrors"
           @decode="onDecode"
         >
           <QrcodeStream
@@ -51,9 +50,6 @@ export default {
     onDecode (result) {
       this.result = result
     },
-    logErrors (promise) {
-      promise.catch(console.error)
-    },
     async onInit (promise) {
       try {
         await promise
@@ -83,6 +79,11 @@ export default {
   .qrcode-stream__camera {
     width: 100%;
     height: 100%;
+  }
+
+  .qrcode-stream__camera,
+  .qrcode-stream__pause-frame {
+    object-fit: cover;
   }
 }
 
