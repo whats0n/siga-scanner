@@ -76,12 +76,12 @@ export default {
       }
     },
     onDecode (result) {
-      this.opened = false
       this.result = result
       this.error = null
       if (!result) {
         this.error = 'Incorrect picture, we cannot find QR code here. Please try again'
       }
+      this.opened = false
     },
     async onInit (promise) {
       try {
