@@ -10,7 +10,7 @@
         @click.prevent="handleClick"
       >Scan</button>
       <div
-        v-if="opened"
+        v-show="opened"
         class="v-modal"
       >
         <QrcodeDropZone
