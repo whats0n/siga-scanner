@@ -6,7 +6,7 @@
     >{{ error }}</div>
     <template v-if="noStreamApiSupport">
       <label class="v-btn-photo">
-        <QrcodeCapture @detect="onDetect"/>
+        <QrcodeCapture @detect="handleDetect"/>
         <span class="v-btn">Scan</span>
       </label>
     </template>
@@ -22,11 +22,11 @@
         <QrcodeDropZone
           v-if="!result"
           class="v-modal__container"
-          @decode="onDecode"
+          @decode="handleDecode"
         >
           <QrcodeStream
-            @init="onInit"
-            @decode="onDecode"
+            @init="handleInit"
+            @decode="handleDecode"
           />
         </QrcodeDropZone>
       </div>
@@ -67,15 +67,15 @@ export default {
       this.opened = true
       this.result = ''
     },
-    async onDetect (promise) {
+    async handleDetect (promise) {
       try {
         const { content } = await promise
-        this.onDecode(content)
+        this.handleDecode(content)
       } catch (error) {
-        this.onDecode(null)
+        this.handleDecode(null)
       }
     },
-    onDecode (result) {
+    handleDecode (result) {
       this.result = result
       this.error = null
       if (!result) {
@@ -83,12 +83,25 @@ export default {
       }
       this.opened = false
     },
-    async onInit (promise) {
+    async handleInit (promise) {
       try {
         await promise
       } catch (error) {
         if (error.name === 'StreamApiNotSupportedError') {
           this.noStreamApiSupport = true
+        }
+        if (error.name === 'NotAllowedError') {
+          this.error = "ERROR: you need to grant camera access permisson"
+        } else if (error.name === 'NotFoundError') {
+          this.error = "ERROR: no camera on this device"
+        } else if (error.name === 'NotSupportedError') {
+          this.error = "ERROR: secure context required (HTTPS, localhost)"
+        } else if (error.name === 'NotReadableError') {
+          this.error = "ERROR: is the camera already in use?"
+        } else if (error.name === 'OverconstrainedError') {
+          this.error = "ERROR: installed cameras are not suitable"
+        } else if (error.name === 'StreamApiNotSupportedError') {
+          this.error = "ERROR: Stream API is not supported in this browser"
         }
       }
     }
