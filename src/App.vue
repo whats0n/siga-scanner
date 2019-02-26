@@ -60,6 +60,7 @@ export default {
   methods: {
     handleClick () {
       this.opened = true
+      this.result = ''
     },
     onDecode (result) {
       this.opened = false
