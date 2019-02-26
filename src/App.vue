@@ -2,11 +2,14 @@
   <div id="app">
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <template v-if="noStreamApiSupport">
-      <QrcodeCapture @decode="onDecode"/>
+      <label class="v-btn-photo">
+        <QrcodeCapture @decode="onDecode"/>
+        <span class="v-btn">Scan</span>
+      </label>
     </template>
     <template v-else>
       <button
-        class="btn"
+        class="v-btn"
         @click.prevent="handleClick"
       >Scan</button>
       <div
@@ -97,6 +100,27 @@ export default {
   .qrcode-stream__pause-frame {
     object-fit: cover;
   }
+}
+
+.v-btn-photo {
+  display: inline-block;
+  vertical-align: top;
+
+  input {
+    display: none;
+  }
+}
+
+.v-btn {
+  display: inline-block;
+  vertical-align: top;
+  outline: 0 !important;
+  padding: 12px 24px;
+  margin: 0;
+  border: 0;
+  border-radius: 3px;
+  background: #cecece;
+  cursor: pointer;
 }
 
 </style>
