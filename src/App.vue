@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div
+      v-if="error"
+      class="v-error-message"
+    >{{ error }}</div>
     <template v-if="noStreamApiSupport">
       <label class="v-btn-photo">
         <QrcodeCapture @decode="onDecode"/>
@@ -45,7 +49,8 @@ export default {
   data: () => ({
     result: '',
     noStreamApiSupport: false,
-    opened: false
+    opened: false,
+    error: null
   }),
   watch: {
     result (newValue) {
@@ -65,6 +70,10 @@ export default {
     onDecode (result) {
       this.opened = false
       this.result = result
+      this.error = null
+      if (!result) {
+        this.error = 'Incorrect picture, we cannot find QR code here. Please try again'
+      }
     },
     async onInit (promise) {
       try {
@@ -122,6 +131,12 @@ export default {
   border-radius: 3px;
   background: #cecece;
   cursor: pointer;
+}
+
+.v-error-message {
+  padding-bottom: 20px;
+  color: red;
+  font-size: 16px;
 }
 
 </style>
