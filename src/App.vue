@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div
-      v-if="error"
-      class="v-error-message"
-    >{{ error }}</div>
     <template v-if="noStreamApiSupport">
       <label class="v-btn-photo">
         <QrcodeCapture @detect="handleDetect"/>
@@ -37,8 +33,6 @@
 <script>
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 
-const fields = document.querySelectorAll('.js-qrcode-info')
-
 export default {
   name: 'app',
   components: {
@@ -57,8 +51,17 @@ export default {
       Array
         .prototype
         .forEach
-        .call(fields, field => {
+        .call(document.querySelectorAll('.js-qrcode-info'), field => {
           field.value = newValue
+        })
+    },
+    error (newValue) {
+      Array
+        .prototype
+        .forEach
+        .call(document.querySelectorAll('.js-qrcode-error'), container => {
+          container.textContent = newValue
+          newValue ? container.classList.add('is-open') : container.classList.remove('is-open')
         })
     }
   },
@@ -118,6 +121,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  background: #fff;
 
   &__container,
   .qrcode-stream,
@@ -153,12 +157,6 @@ export default {
   border-radius: 3px;
   background: #cecece;
   cursor: pointer;
-}
-
-.v-error-message {
-  padding-bottom: 20px;
-  color: red;
-  font-size: 16px;
 }
 
 </style>
